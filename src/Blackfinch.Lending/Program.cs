@@ -1,5 +1,4 @@
-using Blackfinch.Lending.Hosting;
-using Microsoft.Extensions.DependencyInjection;
+using Blackfinch.Lending;
 using Microsoft.Extensions.Hosting;
 
 var builder = Host.CreateApplicationBuilder(args);

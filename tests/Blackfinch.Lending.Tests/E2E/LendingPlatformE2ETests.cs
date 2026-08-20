@@ -1,4 +1,3 @@
-using Blackfinch.Lending.Hosting;
 using Blackfinch.Lending.Infrastructure;
 using Blackfinch.Lending.Tests.TestDoubles;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,7 +10,7 @@ namespace Blackfinch.Lending.Tests.E2E;
 public sealed class LendingPlatformE2ETests
 {
     [Fact]
-    public async Task Worker_remains_active_until_the_host_is_stopped()
+    public async Task GivenHostStartedWhenStopRequestedThenWorkerRemainsActiveUntilHostStops()
     {
         var testConsole = new TestConsoleAdapter(Array.Empty<string>());
         using var host = CreateHost(testConsole);
@@ -28,7 +27,7 @@ public sealed class LendingPlatformE2ETests
     }
 
     [Fact]
-    public async Task Successful_application_reports_decision_and_aggregates()
+    public async Task GivenValidApplicationWhenApplicantMeetsCriteriaThenDecisionSuccessfulAndAggregatesUpdated()
     {
         var output = await RunScenarioAsync(
             "apply 500000 1000000 750",
@@ -43,7 +42,7 @@ public sealed class LendingPlatformE2ETests
     }
 
     [Fact]
-    public async Task Declined_application_reports_decision_and_aggregates()
+    public async Task GivenApplicationWithLowScoreWhenApplicantDoesNotMeetCriteriaThenDecisionDeclinedAndAggregatesUpdated()
     {
         var output = await RunScenarioAsync(
             "apply 500000 1000000 749",
@@ -57,7 +56,7 @@ public sealed class LendingPlatformE2ETests
     }
 
     [Fact]
-    public async Task Aggregates_include_all_valid_decisions_for_the_host_lifetime()
+    public async Task GivenMultipleValidApplicationsWhenStatsRequestedThenAggregatesIncludeAllDecisionsDuringHostLifetime()
     {
         var output = await RunScenarioAsync(
             "apply 500000 1000000 750",
@@ -84,7 +83,7 @@ public sealed class LendingPlatformE2ETests
     [InlineData(
         "apply 100000.001 1000000 750",
         "Loan amount must have no more than two decimal places.")]
-    public async Task Invalid_input_is_rejected_without_recording_an_outcome(
+    public async Task GivenInvalidInputWhenSubmittedThenValidationFailsAndNoOutcomeRecorded(
         string command,
         string expectedError)
     {
@@ -107,7 +106,7 @@ public sealed class LendingPlatformE2ETests
     [InlineData("apply 600000 1000000 800", "Successful")]
     [InlineData("apply 800000 1000000 900", "Successful")]
     [InlineData("apply 900000 1000000 999", "Declined")]
-    public async Task Decision_boundaries_follow_the_specification(
+    public async Task GivenVariousBoundaryInputsWhenEvaluatedThenDecisionMatchesSpecification(
         string command,
         string expectedStatus)
     {

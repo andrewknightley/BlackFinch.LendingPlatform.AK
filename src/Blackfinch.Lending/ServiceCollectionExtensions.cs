@@ -1,10 +1,11 @@
 using Blackfinch.Lending.Application;
 using Blackfinch.Lending.Commands;
 using Blackfinch.Lending.Domain;
+using Blackfinch.Lending.Hosting;
 using Blackfinch.Lending.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Blackfinch.Lending.Hosting;
+namespace Blackfinch.Lending;
 
 public static class ServiceCollectionExtensions
 {

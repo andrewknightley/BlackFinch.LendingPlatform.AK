@@ -4,7 +4,7 @@ namespace Blackfinch.Lending.Application;
 
 public sealed class InMemoryLoanOutcomeStore : ILoanOutcomeStore
 {
-    private readonly object _syncRoot = new();
+    private readonly Lock _syncRoot = new();
     private int _successfulApplicantCount;
     private int _declinedApplicantCount;
     private decimal _totalValueOfLoansWritten;
