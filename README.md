@@ -160,3 +160,5 @@ The requirements for this application are in the attached spec.
 2. Can you rename the tests in the E2E folder to use a Given{Action}When{Conditions}Then{Outcome} naming convention please?
 
 3. I would like a new component test project and some tests on LoanApplicationService that test all valid and invalid outcome paths for confidence in the loan decision logic Also I would like a github actions workflow to build, tests and publish a release artifact for this service
+
+4. I have a gh worklfow file can we add a trigger so it runs on any branch push for build and test and onlypublishes if the branch is main?
